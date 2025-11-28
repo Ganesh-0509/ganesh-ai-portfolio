@@ -14,7 +14,7 @@ export function EducationSection() {
             'text-center mb-16 transition-all duration-700',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}>
-            <span className="text-primary font-mono text-sm mb-4 block">05. Education</span>
+            
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Academic <span className="gradient-text">Background</span>
             </h2>
@@ -76,6 +76,47 @@ export function EducationSection() {
                       {course}
                     </span>
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* School Education Card */}
+          <div className={cn(
+            'relative transition-all duration-700 delay-400 mt-6',
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          )}>
+            <div className="p-8 md:p-10 rounded-2xl glass-card hover-lift">
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <GraduationCap className="w-7 h-7 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold">Velammal Vidyalaya Poonamallee</h3>
+                    <p className="text-primary font-medium">Higher Secondary Education</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Calendar className="w-4 h-4" />
+                  <span className="font-mono text-sm">2020 — 2024</span>
+                </div>
+              </div>
+
+              {/* Details */}
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="p-4 rounded-xl bg-background/50">
+                  <span className="text-sm text-muted-foreground">SSLC</span>
+                  <p className="text-2xl font-bold gradient-text">90.2%</p>
+                </div>
+                <div className="p-4 rounded-xl bg-background/50">
+                  <span className="text-sm text-muted-foreground">HSLC</span>
+                  <p className="text-2xl font-bold gradient-text">87.4%</p>
+                </div>
+                <div className="p-4 rounded-xl bg-background/50">
+                  <span className="text-sm text-muted-foreground">Recognition</span>
+                  <p className="font-medium">Distinction in Academics</p>
                 </div>
               </div>
             </div>

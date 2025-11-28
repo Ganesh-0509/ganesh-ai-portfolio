@@ -49,7 +49,7 @@ export function ContactSection() {
             'text-center mb-16 transition-all duration-700',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}>
-            <span className="text-primary font-mono text-sm mb-4 block">06. Contact</span>
+            
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Let's <span className="gradient-text">Connect</span>
             </h2>
