@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, MapPin, ChevronDown } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, ChevronDown, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function HeroSection() {
@@ -63,6 +63,17 @@ export function HeroSection() {
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Contact Me
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="gap-2 border-primary/50 hover:bg-primary/10"
+              asChild
+            >
+              <a href="/resume.pdf" download="Ganesh_Kumar_T_Resume.pdf">
+                <Download className="w-4 h-4" />
+                Download CV
+              </a>
             </Button>
           </div>
 
