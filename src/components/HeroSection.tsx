@@ -1,5 +1,8 @@
 import { Github, Linkedin, Mail, MapPin, ChevronDown, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { HeroFloatingBackground } from '@/components/ui/HeroFloatingBackground';
+import { MagneticButton } from '@/components/ui/MagneticButton';
+import { motion } from 'framer-motion';
 
 export function HeroSection() {
   const scrollToAbout = () => {
@@ -8,10 +11,11 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* 3D Floating Background */}
+      <HeroFloatingBackground />
+      
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-card/20" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
       
       {/* Grid Pattern */}
       <div 
@@ -24,50 +28,73 @@ export function HeroSection() {
       />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center" style={{ perspective: '1000px' }}>
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 animate-fade-up opacity-0 stagger-1">
+          <motion.div 
+            initial={{ opacity: 0, y: 30, rotateX: -30 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8"
+          >
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className="text-sm text-muted-foreground">Open to opportunities</span>
-          </div>
+          </motion.div>
 
-          {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 animate-fade-up opacity-0 stagger-2">
+          {/* 3D Hero Text Reveal */}
+          <motion.h1
+            initial={{ opacity: 0, y: 50, rotateX: -45 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
             Hi, I'm{' '}
             <span className="gradient-text">Ganesh Kumar T</span>
-          </h1>
+          </motion.h1>
 
           {/* Role */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-fade-up opacity-0 stagger-3">
+          <motion.p
+            initial={{ opacity: 0, y: 40, rotateX: -30 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl md:text-2xl text-muted-foreground mb-4"
+          >
             Machine Learning Engineering Student
-          </p>
+          </motion.p>
 
           {/* Location */}
-          <div className="flex items-center justify-center gap-2 text-muted-foreground mb-8 animate-fade-up opacity-0 stagger-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="flex items-center justify-center gap-2 text-muted-foreground mb-8"
+          >
             <MapPin className="w-4 h-4" />
             <span>Chennai, India</span>
-          </div>
+          </motion.div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-12 animate-fade-up opacity-0 stagger-5">
-            <Button
-              variant="hero"
-              size="lg"
+          {/* CTA Buttons with Magnetic Effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-wrap items-center justify-center gap-4 mb-12"
+          >
+            <MagneticButton
               onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
               View Projects
-            </Button>
-            <Button
-              variant="glass"
-              size="lg"
+            </MagneticButton>
+            <MagneticButton
               onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-gradient-to-r from-muted/80 to-muted text-foreground"
             >
               Contact Me
-            </Button>
+            </MagneticButton>
             <Button
               variant="outline"
               size="lg"
-              className="gap-2 border-primary/50 hover:bg-primary/10"
+              className="gap-2 border-primary/50 hover:bg-primary/10 magnetic-btn"
               asChild
             >
               <a href="/resume.pdf" download="Ganesh_Kumar_T_Resume.pdf">
@@ -75,43 +102,50 @@ export function HeroSection() {
                 Download CV
               </a>
             </Button>
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center gap-4 animate-fade-up opacity-0 stagger-6">
-            <a
-              href="https://github.com/Ganesh-0509"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-xl glass-card hover:border-primary/50 hover:scale-110 transition-all duration-300"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/ganesh-kumar-957t/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-xl glass-card hover:border-primary/50 hover:scale-110 transition-all duration-300"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="mailto:ganesh957kumar@gmail.com"
-              className="p-3 rounded-xl glass-card hover:border-primary/50 hover:scale-110 transition-all duration-300"
-            >
-              <Mail className="w-5 h-5" />
-            </a>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="flex items-center justify-center gap-4"
+          >
+            {[
+              { href: "https://github.com/Ganesh-0509", icon: Github },
+              { href: "https://www.linkedin.com/in/ganesh-kumar-957t/", icon: Linkedin },
+              { href: "mailto:ganesh957kumar@gmail.com", icon: Mail },
+            ].map((social, index) => (
+              <motion.a
+                key={social.href}
+                href={social.href}
+                target={social.href.startsWith('mailto') ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                className="p-3 rounded-xl glass-card card-3d hover:border-primary/50 transition-colors duration-300"
+              >
+                <social.icon className="w-5 h-5" />
+              </motion.a>
+            ))}
+          </motion.div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <button
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 10, 0] }}
+        transition={{ 
+          opacity: { delay: 1.2, duration: 0.5 },
+          y: { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
+        }}
         onClick={scrollToAbout}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
       >
         <ChevronDown className="w-8 h-8 text-muted-foreground" />
-      </button>
+      </motion.button>
     </section>
   );
 }
