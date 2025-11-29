@@ -2,6 +2,10 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 import { Trophy, Medal, Award } from 'lucide-react';
 
+import intelHackathon from '@/assets/intel-hackathon.png';
+import voidV1Hackathon from '@/assets/void-v1-hackathon.png';
+import nxtwaveHackathon from '@/assets/nxtwave-hackathon.png';
+
 const achievements = [
   {
     title: 'Intel AI Hackathon',
@@ -10,14 +14,7 @@ const achievements = [
     icon: Trophy,
     description: 'First place in Intel\'s prestigious AI hackathon, demonstrating excellence in AI innovation.',
     highlight: true,
-  },
-  {
-    title: 'NxtWave x OpenAI Buildathon',
-    role: 'Finalist',
-    year: '2025',
-    icon: Medal,
-    description: 'Selected as a finalist among hundreds of participants for building innovative AI solutions.',
-    highlight: true,
+    image: intelHackathon,
   },
   {
     title: 'VOID V1 (VIT Chennai)',
@@ -26,6 +23,16 @@ const achievements = [
     icon: Award,
     description: 'Secured third position at VIT Chennai\'s hackathon, showcasing technical prowess.',
     highlight: false,
+    image: voidV1Hackathon,
+  },
+  {
+    title: 'NxtWave x OpenAI Buildathon',
+    role: 'Finalist',
+    year: '2025',
+    icon: Medal,
+    description: 'Selected as a finalist among hundreds of participants for building innovative AI solutions.',
+    highlight: true,
+    image: nxtwaveHackathon,
   },
 ];
 
@@ -61,37 +68,46 @@ export function AchievementsSection() {
               <div
                 key={achievement.title}
                 className={cn(
-                  'relative p-6 rounded-2xl glass-card hover-lift transition-all duration-700',
+                  'relative rounded-2xl glass-card hover-lift transition-all duration-700 overflow-hidden',
                   achievement.highlight && 'ring-2 ring-primary/30',
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 )}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                {/* Icon */}
-                <div className={cn(
-                  'w-14 h-14 rounded-xl flex items-center justify-center mb-4',
-                  achievement.highlight ? 'bg-primary/20' : 'bg-muted/50'
-                )}>
-                  <achievement.icon className={cn(
-                    'w-7 h-7',
-                    achievement.highlight ? 'text-primary' : 'text-muted-foreground'
-                  )} />
+                {/* Image */}
+                <div className="relative h-40 overflow-hidden">
+                  <img 
+                    src={achievement.image} 
+                    alt={achievement.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
+                  
+                  {/* Icon overlay */}
+                  <div className={cn(
+                    'absolute bottom-3 left-4 w-10 h-10 rounded-lg flex items-center justify-center',
+                    achievement.highlight ? 'bg-primary/90' : 'bg-muted/90'
+                  )}>
+                    <achievement.icon className="w-5 h-5 text-primary-foreground" />
+                  </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span className={cn(
-                    'px-2 py-0.5 text-xs font-semibold rounded-full',
-                    achievement.role === 'Winner' && 'bg-yellow-500/20 text-yellow-400',
-                    achievement.role === 'Finalist' && 'bg-secondary/20 text-secondary',
-                    achievement.role === '3rd Place' && 'bg-orange-500/20 text-orange-400'
-                  )}>
-                    {achievement.role}
-                  </span>
-                  <span className="text-xs text-muted-foreground font-mono">{achievement.year}</span>
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={cn(
+                      'px-2 py-0.5 text-xs font-semibold rounded-full',
+                      achievement.role === 'Winner' && 'bg-yellow-500/20 text-yellow-400',
+                      achievement.role === 'Finalist' && 'bg-secondary/20 text-secondary',
+                      achievement.role === '3rd Place' && 'bg-orange-500/20 text-orange-400'
+                    )}>
+                      {achievement.role}
+                    </span>
+                    <span className="text-xs text-muted-foreground font-mono">{achievement.year}</span>
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2">{achievement.title}</h3>
+                  <p className="text-sm text-muted-foreground">{achievement.description}</p>
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{achievement.title}</h3>
-                <p className="text-sm text-muted-foreground">{achievement.description}</p>
               </div>
             ))}
           </div>
