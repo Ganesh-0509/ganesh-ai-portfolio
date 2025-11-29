@@ -2,6 +2,8 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
 import { ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ProjectCard3D } from '@/components/ui/ProjectCard3D';
+import { motion } from 'framer-motion';
 
 import sahaayImage from '@/assets/sahaay-ai-project.jpg';
 import finmateImage from '@/assets/finmate-project.jpg';
@@ -55,106 +57,106 @@ export function ProjectsSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className={cn(
-            'text-center mb-12 transition-all duration-700',
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          )}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
               Featured <span className="gradient-text">Work</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               A selection of projects showcasing my expertise in AI, ML, and full-stack development
             </p>
-          </div>
+          </motion.div>
 
           {/* Projects Grid */}
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
-              <div
+              <motion.div
                 key={project.title}
-                className={cn(
-                  'group relative rounded-2xl overflow-hidden transition-all duration-700 ease-out',
-                  isVisible 
-                    ? 'opacity-100 translate-y-0 scale-100' 
-                    : 'opacity-0 translate-y-12 scale-95'
-                )}
-                style={{ 
-                  transitionDelay: isVisible ? `${index * 150}ms` : '0ms',
-                  transitionProperty: 'opacity, transform'
+                initial={{ opacity: 0, y: 50, rotateX: 15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.15,
+                  ease: "easeOut"
                 }}
+                style={{ perspective: '1000px' }}
               >
-                {/* Background Gradient */}
-                <div className={cn('absolute inset-0 bg-gradient-to-br opacity-50 transition-opacity duration-500 group-hover:opacity-70', project.gradient)} />
-                
-                {/* Card Content */}
-                <div className="relative glass-card h-full overflow-hidden transition-transform duration-500 group-hover:-translate-y-1 group-hover:shadow-2xl">
-                  {/* Project Image */}
-                  <div className="relative w-full h-56 md:h-64 overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={`${project.title} screenshot`}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-80" />
-                  </div>
-
-                  <div className="p-5 md:p-6">
-                    {/* Title */}
-                    <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
-                      {project.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-muted-foreground mb-4 leading-relaxed text-sm md:text-base">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.tech.map((tech, techIndex) => (
-                        <span
-                          key={tech}
-                          className={cn(
-                            'px-2 py-0.5 text-xs font-mono rounded-md bg-background/50 text-muted-foreground border border-border/50 transition-all duration-300',
-                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                          )}
-                          style={{ transitionDelay: isVisible ? `${(index * 150) + (techIndex * 50)}ms` : '0ms' }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                <ProjectCard3D gradient={project.gradient}>
+                  {/* Background Gradient */}
+                  <div className={cn('absolute inset-0 bg-gradient-to-br opacity-50', project.gradient)} />
+                  
+                  {/* Card Content */}
+                  <div className="relative glass-card h-full overflow-hidden">
+                    {/* Project Image */}
+                    <div className="relative w-full h-56 md:h-64 overflow-hidden">
+                      <img 
+                        src={project.image} 
+                        alt={`${project.title} screenshot`}
+                        className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-80" />
                     </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-2">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="gap-2 transition-all duration-300 hover:scale-105"
-                        asChild
-                      >
-                        <a href={project.github} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-4 h-4" />
-                          Code
-                        </a>
-                      </Button>
-                      {project.demo && (
+                    <div className="p-5 md:p-6">
+                      {/* Title */}
+                      <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
+                        {project.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-muted-foreground mb-4 leading-relaxed text-sm md:text-base">
+                        {project.description}
+                      </p>
+
+                      {/* Tech Stack */}
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {project.tech.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-0.5 text-xs font-mono rounded-md bg-background/50 text-muted-foreground border border-border/50"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2">
                         <Button 
                           variant="ghost" 
                           size="sm" 
-                          className="gap-2 transition-all duration-300 hover:scale-105"
+                          className="gap-2 hover:scale-105 transition-transform"
                           asChild
                         >
-                          <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-4 h-4" />
-                            Live Demo
+                          <a href={project.github} target="_blank" rel="noopener noreferrer">
+                            <Github className="w-4 h-4" />
+                            Code
                           </a>
                         </Button>
-                      )}
+                        {project.demo && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="gap-2 hover:scale-105 transition-transform"
+                            asChild
+                          >
+                            <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="w-4 h-4" />
+                              Live Demo
+                            </a>
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </ProjectCard3D>
+              </motion.div>
             ))}
           </div>
         </div>
