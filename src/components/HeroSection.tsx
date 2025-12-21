@@ -2,9 +2,16 @@ import { Github, Linkedin, Mail, MapPin, ChevronDown, Download } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { HeroFloatingBackground } from '@/components/ui/HeroFloatingBackground';
 import { MagneticButton } from '@/components/ui/MagneticButton';
+import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
 import { motion } from 'framer-motion';
 
 export function HeroSection() {
+  const roleWords = [
+    { text: "Machine" },
+    { text: "Learning" },
+    { text: "Engineering" },
+    { text: "Student", className: "text-primary" },
+  ];
   const scrollToAbout = () => {
     document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -52,15 +59,15 @@ export function HeroSection() {
             <span className="gradient-text">Ganesh Kumar T</span>
           </motion.h1>
 
-          {/* Role */}
-          <motion.p
-            initial={{ opacity: 0, y: 40, rotateX: -30 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          {/* Role with Typewriter Effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-4"
+            className="flex justify-center"
           >
-            Machine Learning Engineering Student
-          </motion.p>
+            <TypewriterEffectSmooth words={roleWords} className="text-xl md:text-2xl" />
+          </motion.div>
 
           {/* Location */}
           <motion.div
