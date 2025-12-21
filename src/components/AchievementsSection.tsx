@@ -44,11 +44,11 @@ const achievements = [
 ];
 
 const certifications = [
-  'Oracle Java SE21 Developer',
-  'Google Vertex AI — Prompt Design',
-  '5-day GenAI Intensive — Kaggle',
-  'Coursera Java Badge',
-  'YBI Python Programming',
+  'Oracle Java SE 21 Developer Professional — Oracle (Nov 2025)',
+  '5-Day GenAI Intensive — Kaggle (Jan 2025)',
+  'Build Real World AI Applications with Gemini and Imagen — Google Cloud',
+  'Getting Started with Git and GitHub — IBM (Coursera)',
+  'Introduction to Software Engineering — IBM (Coursera)',
 ];
 
 export function AchievementsSection() {
