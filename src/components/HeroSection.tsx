@@ -7,9 +7,9 @@ import { motion } from 'framer-motion';
 
 export function HeroSection() {
   const roleWords = [
-    { text: "Machine" },
-    { text: "Learning" },
-    { text: "Engineering" },
+    { text: "Machine", className: "text-primary" },
+    { text: "Learning", className: "text-primary" },
+    { text: "Engineering", className: "text-primary" },
     { text: "Student", className: "text-primary" },
   ];
   const scrollToAbout = () => {
