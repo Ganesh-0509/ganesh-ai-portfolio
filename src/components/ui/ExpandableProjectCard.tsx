@@ -175,35 +175,16 @@ export function ExpandableProjectCards({ projects }: ExpandableProjectCardProps)
               <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
             </motion.div>
 
-            <div className="p-5">
+            <div className="p-5 flex items-center justify-between">
               <motion.h3
                 layoutId={`title-${project.title}-${id}`}
-                className="font-bold text-xl mb-2 group-hover:text-primary transition-colors"
+                className="font-bold text-xl group-hover:text-primary transition-colors"
               >
                 {project.title}
               </motion.h3>
-              <motion.p
-                layoutId={`description-${project.title}-${id}`}
-                className="text-muted-foreground text-sm line-clamp-2"
-              >
-                {project.description}
-              </motion.p>
-
-              <div className="flex flex-wrap gap-1.5 mt-4">
-                {project.tech.slice(0, 4).map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2 py-0.5 text-xs font-mono rounded-md bg-muted/50 text-muted-foreground"
-                  >
-                    {tech}
-                  </span>
-                ))}
-                {project.tech.length > 4 && (
-                  <span className="px-2 py-0.5 text-xs font-mono rounded-md bg-muted/50 text-muted-foreground">
-                    +{project.tech.length - 4}
-                  </span>
-                )}
-              </div>
+              <span className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                Click to view details →
+              </span>
             </div>
           </motion.div>
         ))}

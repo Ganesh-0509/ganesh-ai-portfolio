@@ -5,6 +5,8 @@ import { MagneticButton } from '@/components/ui/MagneticButton';
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
 import { motion } from 'framer-motion';
 
+const LOADING_DURATION = 1.5; // seconds - sync with App.tsx loading time
+
 export function HeroSection() {
   const roleWords = [
     { text: "Machine", className: "text-primary" },
@@ -40,7 +42,7 @@ export function HeroSection() {
           <motion.div 
             initial={{ opacity: 0, y: 30, rotateX: -30 }}
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: 0.8, delay: LOADING_DURATION + 0.1 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -51,7 +53,7 @@ export function HeroSection() {
           <motion.h1
             initial={{ opacity: 0, y: 50, rotateX: -45 }}
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 1, delay: LOADING_DURATION + 0.2, ease: "easeOut" }}
             className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6"
             style={{ transformStyle: 'preserve-3d' }}
           >
@@ -63,7 +65,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: LOADING_DURATION + 0.4 }}
             className="flex justify-center"
           >
             <TypewriterEffectSmooth words={roleWords} className="text-xl md:text-2xl" />
@@ -73,7 +75,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: LOADING_DURATION + 0.5 }}
             className="flex items-center justify-center gap-2 text-muted-foreground mb-8"
           >
             <MapPin className="w-4 h-4" />
@@ -84,7 +86,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: LOADING_DURATION + 0.6 }}
             className="flex flex-wrap items-center justify-center gap-4 mb-12"
           >
             <MagneticButton
@@ -115,7 +117,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: LOADING_DURATION + 0.7 }}
             className="flex items-center justify-center gap-4"
           >
             {[
@@ -145,7 +147,7 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{ 
-          opacity: { delay: 1.2, duration: 0.5 },
+          opacity: { delay: LOADING_DURATION + 1.2, duration: 0.5 },
           y: { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
         }}
         onClick={scrollToAbout}
