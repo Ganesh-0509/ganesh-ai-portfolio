@@ -47,7 +47,7 @@ export function HackathonTimeline() {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section id="hackathons" className="py-16 md:py-20 relative">
+    <section id="hackathons" className="py-12 md:py-16 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
@@ -56,7 +56,7 @@ export function HackathonTimeline() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Hackathons & <span className="gradient-text">Recognition</span>

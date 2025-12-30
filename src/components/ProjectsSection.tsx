@@ -51,7 +51,7 @@ const projects = [
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-16 md:py-20 relative">
+    <section id="projects" className="py-12 md:py-16 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
