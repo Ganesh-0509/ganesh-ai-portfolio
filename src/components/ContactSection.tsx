@@ -1,28 +1,11 @@
+import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
-import { Mail, Phone, MapPin, Github, Linkedin, Send } from 'lucide-react';
+import { Mail, Send, Github, Linkedin, User, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-const contactInfo = [
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'ganesh957kumar@gmail.com',
-    href: 'mailto:ganesh957kumar@gmail.com',
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: '+91 7825083996',
-    href: 'tel:+917825083996',
-  },
-  {
-    icon: MapPin,
-    label: 'Location',
-    value: 'Chennai, India',
-    href: null,
-  },
-];
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
 
 const socialLinks = [
   {
@@ -39,6 +22,33 @@ const socialLinks = [
 
 export function ContactSection() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    const mailtoLink = `mailto:ganesh957kumar@gmail.com?subject=${encodeURIComponent(
+      formData.subject || `Message from ${formData.name}`
+    )}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    )}`;
+
+    window.location.href = mailtoLink;
+    toast.success('Opening your email client...');
+    
+    // Reset form
+    setFormData({ name: '', email: '', subject: '', message: '' });
+  };
 
   return (
     <section id="contact" ref={ref} className="section-padding relative bg-card/30">
@@ -49,86 +59,103 @@ export function ContactSection() {
             'text-center mb-16 transition-all duration-700',
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           )}>
-            
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Let's <span className="gradient-text">Connect</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              I'm always open to discussing new opportunities, interesting projects, or just having a chat about AI and technology.
+              Have a project idea or just want to say hi? Send me a message!
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Contact Info */}
+            {/* Contact Form */}
             <div className={cn(
-              'space-y-4 transition-all duration-700 delay-200',
+              'transition-all duration-700 delay-200',
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
             )}>
-              {contactInfo.map((item) => (
-                <div
-                  key={item.label}
-                  className="p-4 rounded-xl glass-card flex items-center gap-4 group hover:border-primary/50 transition-all"
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Your Name *"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="pl-10 glass-card border-border/50 focus:border-primary/50"
+                  />
+                </div>
+                
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    type="email"
+                    placeholder="Your Email *"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="pl-10 glass-card border-border/50 focus:border-primary/50"
+                  />
+                </div>
+                
+                <div className="relative">
+                  <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Subject (optional)"
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    className="pl-10 glass-card border-border/50 focus:border-primary/50"
+                  />
+                </div>
+                
+                <Textarea
+                  placeholder="Your Message *"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  rows={5}
+                  className="glass-card border-border/50 focus:border-primary/50 resize-none"
+                />
+                
+                <Button
+                  type="submit"
+                  variant="hero"
+                  size="lg"
+                  className="w-full"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <item.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <span className="text-sm text-muted-foreground">{item.label}</span>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        className="block font-medium hover:text-primary transition-colors"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="font-medium">{item.value}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-
-              {/* Social Links */}
-              <div className="pt-4">
-                <p className="text-sm text-muted-foreground mb-3">Find me on</p>
-                <div className="flex gap-3">
-                  {socialLinks.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 rounded-xl glass-card hover:border-primary/50 hover:scale-110 transition-all duration-300"
-                    >
-                      <link.icon className="w-5 h-5" />
-                    </a>
-                  ))}
-                </div>
-              </div>
+                  <Send className="w-4 h-4 mr-2" />
+                  Send Message
+                </Button>
+              </form>
             </div>
 
-            {/* CTA Card */}
+            {/* Info Card */}
             <div className={cn(
               'transition-all duration-700 delay-400',
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
             )}>
               <div className="p-8 rounded-2xl glass-card h-full flex flex-col justify-center text-center">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-6">
-                  <Send className="w-7 h-7 text-primary" />
+                  <Mail className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Ready to collaborate?</h3>
+                <h3 className="text-xl font-bold mb-3">Let's work together!</h3>
                 <p className="text-muted-foreground mb-6">
-                  Whether you have a project idea, a question, or just want to say hi, I'd love to hear from you!
+                  Fill out the form and your message will be sent directly to my inbox. I'll get back to you as soon as possible!
                 </p>
-                <Button
-                  variant="hero"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => window.location.href = 'mailto:ganesh957kumar@gmail.com'}
-                >
-                  <Mail className="w-4 h-4 mr-2" />
-                  Send me an Email
-                </Button>
+                
+                {/* Social Links */}
+                <div className="pt-4 border-t border-border/50">
+                  <p className="text-sm text-muted-foreground mb-3">Or find me on</p>
+                  <div className="flex gap-3 justify-center">
+                    {socialLinks.map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 rounded-xl glass-card hover:border-primary/50 hover:scale-110 transition-all duration-300"
+                      >
+                        <link.icon className="w-5 h-5" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
