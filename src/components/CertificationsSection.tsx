@@ -36,7 +36,7 @@ const certifications = [
 
 export function CertificationsSection() {
   return (
-    <section id="certifications" className="py-16 md:py-20 relative bg-card/30">
+    <section id="certifications" className="py-12 md:py-16 relative bg-card/30">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
