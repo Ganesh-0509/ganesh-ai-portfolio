@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { cn } from '@/lib/utils';
-import { Mail, Send, Github, Linkedin, User, MessageSquare } from 'lucide-react';
+import { Mail, Send, Github, Linkedin, User, MessageSquare, CheckCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const socialLinks = [
   {
@@ -28,6 +29,7 @@ export function ContactSection() {
     subject: '',
     message: '',
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,17 +39,25 @@ export function ContactSection() {
       return;
     }
 
+    // Show success animation
+    setIsSubmitted(true);
+
     const mailtoLink = `mailto:ganesh957kumar@gmail.com?subject=${encodeURIComponent(
       formData.subject || `Message from ${formData.name}`
     )}&body=${encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
     )}`;
 
-    window.location.href = mailtoLink;
-    toast.success('Opening your email client...');
+    // Delay opening email client to show animation
+    setTimeout(() => {
+      window.location.href = mailtoLink;
+    }, 1500);
     
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    // Reset form after animation
+    setTimeout(() => {
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setIsSubmitted(false);
+    }, 3000);
   };
 
   return (
@@ -73,56 +83,114 @@ export function ContactSection() {
               'transition-all duration-700 delay-200',
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
             )}>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Your Name *"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="pl-10 glass-card border-border/50 focus:border-primary/50"
-                  />
-                </div>
-                
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    type="email"
-                    placeholder="Your Email *"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="pl-10 glass-card border-border/50 focus:border-primary/50"
-                  />
-                </div>
-                
-                <div className="relative">
-                  <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Subject (optional)"
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="pl-10 glass-card border-border/50 focus:border-primary/50"
-                  />
-                </div>
-                
-                <Textarea
-                  placeholder="Your Message *"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  rows={5}
-                  className="glass-card border-border/50 focus:border-primary/50 resize-none"
-                />
-                
-                <Button
-                  type="submit"
-                  variant="hero"
-                  size="lg"
-                  className="w-full"
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Send Message
-                </Button>
-              </form>
+              <AnimatePresence mode="wait">
+                {isSubmitted ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="h-full min-h-[320px] flex flex-col items-center justify-center glass-card rounded-xl p-8"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                      className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mb-6"
+                    >
+                      <CheckCircle className="w-10 h-10 text-primary" />
+                    </motion.div>
+                    <motion.h3
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="text-xl font-bold mb-2"
+                    >
+                      Message Ready!
+                    </motion.h3>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-muted-foreground text-center"
+                    >
+                      Opening your email client...
+                    </motion.p>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.6 }}
+                      className="flex gap-1 mt-4"
+                    >
+                      {[0, 1, 2].map((i) => (
+                        <motion.div
+                          key={i}
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ repeat: Infinity, delay: i * 0.2, duration: 0.6 }}
+                          className="w-2 h-2 rounded-full bg-primary"
+                        />
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                  >
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Your Name *"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="pl-10 glass-card border-border/50 focus:border-primary/50"
+                      />
+                    </div>
+                    
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        type="email"
+                        placeholder="Your Email *"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="pl-10 glass-card border-border/50 focus:border-primary/50"
+                      />
+                    </div>
+                    
+                    <div className="relative">
+                      <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Subject (optional)"
+                        value={formData.subject}
+                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                        className="pl-10 glass-card border-border/50 focus:border-primary/50"
+                      />
+                    </div>
+                    
+                    <Textarea
+                      placeholder="Your Message *"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      rows={5}
+                      className="glass-card border-border/50 focus:border-primary/50 resize-none"
+                    />
+                    
+                    <Button
+                      type="submit"
+                      variant="hero"
+                      size="lg"
+                      className="w-full"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      Send Message
+                    </Button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Info Card */}
