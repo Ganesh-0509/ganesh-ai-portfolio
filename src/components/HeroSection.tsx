@@ -71,6 +71,16 @@ export function HeroSection() {
             <TypewriterEffectSmooth words={roleWords} className="text-xl md:text-2xl" />
           </motion.div>
 
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: LOADING_DURATION + 0.45 }}
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed"
+          >
+            Full-stack developer focused on AI-powered web apps — I've shipped 6+ projects using Next.js, TypeScript, and LLMs.
+          </motion.p>
+
           {/* Location */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
