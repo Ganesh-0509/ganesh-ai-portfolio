@@ -100,7 +100,16 @@ export function HeroSection() {
             className="flex flex-wrap items-center justify-center gap-4 mb-12"
           >
             <MagneticButton
-              onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => {
+                const el = document.querySelector('#projects') as HTMLElement | null;
+                if (!el) return;
+                el.scrollIntoView({ behavior: 'smooth' });
+                el.classList.remove('section-highlight');
+                // restart animation
+                void el.offsetWidth;
+                el.classList.add('section-highlight');
+                window.setTimeout(() => el.classList.remove('section-highlight'), 1700);
+              }}
             >
               View Projects
             </MagneticButton>
